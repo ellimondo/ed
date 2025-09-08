@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SVG Morph Demo - anime.js (3 shapes)</title>
+    <title>SVG Morph Demo - anime.js (6-point shapes)</title>
     <style>
         html, body { height: 100%; margin: 0; }
         body {
@@ -28,14 +28,13 @@
         button:hover { filter: brightness(1.1); }
     </style>
     <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js"></script>
-    <!-- Note: anime.js can morph path `d` values. For best results, use shapes with similar point counts/order. -->
 </head>
 <body>
     <div class="container">
-        <!-- Use the tallest viewBox so shorter shapes fit without clipping -->
+        <!-- All shapes have 6 points -->
         <svg viewBox="0 0 172 199" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path id="morph-path" fill="#1E3F6F"
-                  d="M0 49.55V148.64L85.82 198.18L171.63 148.64V49.55L85.82 0L0 49.55Z" />
+                  d="M0 49.55L0 148.64L85.82 198.18L171.63 148.64L171.63 49.55L85.82 0Z" />
         </svg>
 
         <div class="controls">
@@ -46,14 +45,17 @@
     </div>
 
     <script>
-        // Original shapes provided
-        const shape1 = "M0 49.55V148.64L85.82 198.18L171.63 148.64V49.55L85.82 0L0 49.55Z";
-        const shape2 = "M0 20.55V141.64L85.82 161.18L171.63 141.64V20.55L85.82 0L0 20.55Z";
-        const shape3 = "M171.17 -5H0V166.17H171.17V-5Z";
+        // All shapes have 6 points
+
+        // Hexagon (original)
+        const shape1 = "M0 49.55L0 148.64L85.82 198.18L171.63 148.64L171.63 49.55L85.82 0Z";
+        // Squashed hexagon
+        const shape2 = "M0 20.55L0 141.64L85.82 161.18L171.63 141.64L171.63 20.55L85.82 0Z";
+        // Rectangle as 6-point polygon (each side split)
+        const shape3 = "M0 0L0 166.17L85.82 166.17L171.17 166.17L171.17 0L85.82 0Z";
 
         const morphTarget = document.querySelector('#morph-path');
 
-        // Build a looping animation morphing through the three shapes
         const morphAnimation = anime({
             targets: morphTarget,
             d: [
@@ -68,11 +70,9 @@
             direction: 'normal'
         });
 
-        // Basic controls
         document.querySelector('#play').addEventListener('click', () => morphAnimation.play());
         document.querySelector('#pause').addEventListener('click', () => morphAnimation.pause());
         document.querySelector('#restart').addEventListener('click', () => morphAnimation.restart());
     </script>
 </body>
 </html>
-

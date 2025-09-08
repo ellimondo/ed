@@ -47,9 +47,14 @@
 
     <script>
         // Original shapes provided
-        const shape1 = "M0 49.55V148.64L85.82 198.18L171.63 148.64V49.55L85.82 0L0 49.55Z";
-        const shape2 = "M0 20.55V141.64L85.82 161.18L171.63 141.64V20.55L85.82 0L0 20.55Z";
-        const shape3 = "M171.17 -5H0V166.17H171.17V-5Z";
+        // Normalize all shapes to use the same number of points and explicit 'L' commands
+        // Shape 1 (hex-like): 6 vertices
+        const shape1 = "M0 49.55 L0 148.64 L85.82 198.18 L171.63 148.64 L171.63 49.55 L85.82 0 Z";
+        // Shape 2 (compressed variant): 6 vertices
+        const shape2 = "M0 20.55 L0 141.64 L85.82 161.18 L171.63 141.64 L171.63 20.55 L85.82 0 Z";
+        // Shape 3 (rectangle resampled to 6 vertices to match others)
+        // Uses midpoints on edges and aligns start at left-mid like shape1
+        const shape3 = "M0 49.55 L0 166.17 L85.585 166.17 L171.17 166.17 L171.17 49.55 L85.585 -5 Z";
 
         const morphTarget = document.querySelector('#morph-path');
 
@@ -61,7 +66,7 @@
                 { value: shape3 },
                 { value: shape1 }
             ],
-            duration: 1500,
+            duration: 5000,
             easing: 'easeInOutQuad',
             loop: true,
             autoplay: true,
